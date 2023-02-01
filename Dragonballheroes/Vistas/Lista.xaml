@@ -1,0 +1,143 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Dragonballheroes.Vistas.Lista"
+             xmlns:cardView ="clr-namespace:PanCardView;assembly=PanCardView"
+             xmlns:proc="clr-namespace:PanCardView.Processors;assembly=PanCardView"
+             xmlns:sharpnado="clr-namespace:Sharpnado.MaterialFrame;assembly=Sharpnado.MaterialFrame"
+             xmlns:degradado="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView">
+    <Grid RowDefinitions="350, *"
+          BackgroundColor="White">
+        <Grid>
+            <degradado:PancakeView BackgroundGradientStartPoint="0, 1" BackgroundGradientEndPoint="1, 0">
+                <degradado:PancakeView.BackgroundGradientStops>
+                    <degradado:GradientStopCollection>
+                        <degradado:GradientStop Color="White" Offset="0"/>
+                        <degradado:GradientStop Color="White" Offset="0.5"/>
+                        <degradado:GradientStop Color="White" Offset="0.6"/>
+                        <degradado:GradientStop Color="{Binding Color1}" Offset="0.8" x:Name="c1"/>
+                        <degradado:GradientStop Color="{Binding Color2}" Offset="1" x:Name="c2"/>
+                    </degradado:GradientStopCollection>
+                </degradado:PancakeView.BackgroundGradientStops>
+            </degradado:PancakeView>
+            <cardView:CoverFlowView
+                ItemsSource="{Binding Lista}"
+                PositionShiftValue="100"
+                IsCyclical="False"
+                Margin="0, 30, 0, 0"
+                PropertyChanged="Desplazamiento">
+                <x:Arguments>
+                <proc:CoverFlowProcessor ScaleFactor="0.75" />
+                </x:Arguments>
+                <cardView:CoverFlowView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Margin="60, 0">
+                            <Frame Padding="0"
+                                   CornerRadius="18"
+                                   >
+                                <Image Source="{Binding Icono}" 
+                                       Aspect="Fill"
+                                       />
+                            </Frame>
+                            <Grid HeightRequest="60"
+                                  VerticalOptions="End"
+                                  HorizontalOptions="Start"
+                                  Margin="10">
+                                <sharpnado:MaterialFrame 
+                                    MaterialBlurStyle="Light"
+                                    MaterialTheme="AcrylicBlur"
+                                    CornerRadius="18"/>
+                                <StackLayout Orientation="Horizontal"
+                                             Margin="15, 0">
+                                    <Label Text="Colores"
+                                           TextColor="White"
+                                           VerticalOptions="Center"
+                                           FontAttributes="bold"/>
+                                    <BoxView BackgroundColor="{Binding Source={x:Reference c1}, Path=Color}"
+                                             HeightRequest="30"
+                                             WidthRequest="30"
+                                             CornerRadius="15"
+                                             VerticalOptions="Center"/>
+                                    <BoxView BackgroundColor="{Binding Source={x:Reference c2}, Path=Color}"
+                                             HeightRequest="30"
+                                             WidthRequest="30"
+                                             CornerRadius="15"
+                                             VerticalOptions="Center"/>
+                                </StackLayout>
+                            </Grid>
+                        </Grid>
+                    </DataTemplate>
+                </cardView:CoverFlowView.ItemTemplate>
+            </cardView:CoverFlowView>
+        </Grid>
+        <Grid Grid.Row="1"
+              Margin="20">
+            <sharpnado:MaterialFrame CornerRadius="18"
+                                     MaterialBlurStyle="Light"
+                                     MaterialTheme="AcrylicBlur"/>
+            <Grid Margin="20">
+                <sharpnado:MaterialFrame CornerRadius="18"
+                                     MaterialBlurStyle="ExtraLight"
+                                     MaterialTheme="AcrylicBlur"/>
+                <StackLayout VerticalOptions="CenterAndExpand">
+                    <Label Text="Colores predominantes"
+                           FontSize="20"
+                           HorizontalOptions="Center"
+                           FontAttributes="Bold"/>
+                    <Button Text="Principal"
+                            TextTransform="None"
+                            CornerRadius="20"
+                            HorizontalOptions="Start"
+                            BackgroundColor="White"
+                            Margin="25, 0"/>
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="#Color html:"
+                               FontAttributes="Bold"
+                               FontSize="20"
+                               VerticalOptions="Center"
+                               Margin="20, 0,0,0"/>
+                        <Label Text="{Binding Color1}"
+                               FontAttributes="Bold"
+                               FontSize="20"
+                               VerticalOptions="Center"
+                               TextColor="{Binding Source={x:Reference c1}, Path=Color}"/>
+                        <BoxView HeightRequest="30"
+                                 WidthRequest="30"
+                                 CornerRadius="15"
+                                 VerticalOptions="Center"
+                                 BackgroundColor="{Binding Source={x:Reference c1}, Path=Color}"/>
+                    </StackLayout>
+                    <Button Text="Secundario"
+                            TextTransform="None"
+                            CornerRadius="20"
+                            HorizontalOptions="Start"
+                            BackgroundColor="White"
+                            Margin="20, 0"/>
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="#Color html:"
+                               FontAttributes="Bold"
+                               FontSize="20"
+                               VerticalOptions="Center"
+                               Margin="25, 0,0,0"/>
+                        <Label Text="{Binding Color2}"
+                               FontAttributes="Bold"
+                               FontSize="20"
+                               VerticalOptions="Center"
+                               TextColor="{Binding Source={x:Reference c2}, Path=Color}"/>
+                        <BoxView HeightRequest="30"
+                                 WidthRequest="30"
+                                 CornerRadius="15"
+                                 VerticalOptions="Center"
+                                 BackgroundColor="{Binding Source={x:Reference c2}, Path=Color}"/>
+                    </StackLayout>
+                </StackLayout>
+            </Grid>
+        </Grid>
+        <Grid.Background>
+            <LinearGradientBrush StartPoint="1, 0">
+                <GradientStop Color="White" Offset="0.4"/>
+                <GradientStop Color="{Binding Source={x:Reference c1}, Path=Color}" Offset="0.8"/>
+            </LinearGradientBrush>
+        </Grid.Background>
+    </Grid>
+</ContentPage>
